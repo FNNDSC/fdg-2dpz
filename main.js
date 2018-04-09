@@ -462,7 +462,7 @@ let toggleData = null;
         // uid found
         // and nothing previously cached (first load)
         curDataSetIdx = currentIndex;
-        nextDataSetIdx  = (curDataSetIdx + 1) % dataSets.length;
+        nextDataSetIdx = (curDataSetIdx + 1) % dataSets.length;
         dataSet = dataSets[curDataSetIdx];
     } else if (curDataSetIdx === currentIndex) {
         // uid found
