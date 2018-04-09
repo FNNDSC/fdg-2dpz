@@ -63,10 +63,19 @@ class Node:
 
         self.__name__           = "node"
 
-        self.str_name           = ""
-        self.str_type           = ""
-        self.size               = 10
-        self.f_score            = 0.5
+        self.d_desc = {
+            "id":       "",
+            "type":     "circle",
+            "score":    0.5,
+            "group":    1,
+            "size":     10
+        }
+
+        # self.str_name           = ""
+        # self.str_type           = "circle"
+        # self.size               = 10
+        # self.f_score            = 0.5
+        # self.group              = None
 
         self.l_connectedTo      = []
 
@@ -77,13 +86,21 @@ class Node:
                                             )
 
         for k,v in kwargs.items():
-            if k == 'name':     self.str_name   = v
-            if k == 'type':     self.str_type   = v
-            if k == 'size':     self.size       = int(v)
-            if k == 'score':    self.f_score    = float(v)
+            if k == 'id':       self.d_desc["id"]       = v
+            if k == 'type':     self.d_desc["type"]     = v
+            if k == 'size':     self.d_desc["size"]     = int(v)
+            if k == 'score':    self.d_desc["score"]    = float(v)
+            if k == 'group':    self.d_desc["group"]    = int(v)
+            if k == 'nodeLine': self.d_desc             = v
         
-        self.dp.qprint('Creating node "%s"...' % self.str_name)
+        self.dp.qprint('Node created.')
+        self.dp.qprint(self)
 
+    def __str__(self):
+        return """
+        %s
+        """ % json.dumps(self.d_desc, indent = 4, sort_keys = True)
+        
     def connectTo(self, *args, **kwargs):
         """
         Connect this node to target (in kwargs)
@@ -123,11 +140,10 @@ class FDG:
         self.d_nodes            = {}                # dict containing the...
         self.ld_nodes           = []                # ... list of dict nodes
 
-        self.l_nodes            = []                # a list of nodes to save
-
         self.l_Node             = []                # a list of node objects
-        self.lstr_nodeName      = []                # a similarly indexed list
+        self.lstr_nodeID        = []                # a similarly indexed list
                                                     # of node names
+        self.l_nodeID           = []
 
         self.d_links            = {}                # dict containing the...
         self.ld_links           = []                # ... list of dict links
@@ -142,27 +158,23 @@ class FDG:
                                             )
 
         # per-node variables
-        self.str_name           = ""
-        self.str_type           = ""
-        self.size               = 10
-        self.f_score            = 0.5
+        NodeDummy               = Node()
+        self.d_nodeLine         = NodeDummy.d_desc
 
     def node_add(self, *args, **kwargs):
         """
         Add a node to the list of nodes.
         """
         for k,v in kwargs.items():
-            if k == 'name':     self.str_name   = v
-            if k == 'type':     self.str_type   = v
-            if k == 'size':     self.size       = int(v)
-            if k == 'score':    self.f_score    = float(v)
+            if k == 'nodeInfo': self.d_nodeLine = v
 
         self.l_Node.append(Node(
-            name    = self.str_name,
-            type    = self.str_type,
-            size    = self.size,
-            score   = self.f_score
+            nodeInfo = self.d_nodeLine
         ))
+        self.lstr_nodeID.append(
+            self.d_nodeLine['id']
+        )
+        self.l_nodeID   = list(range(0, len(self.l_Node)))
 
     def Node_filterOnName(self, *args, **kwargs):
         """
@@ -170,18 +182,20 @@ class FDG:
         """
         d_ret = {
             'status':   False,
-            'Node':     None
+            'Node':     None,
+            'index':    0
         }
         str_name    = ""
         for k,v in kwargs.items():
             if k == 'name': str_name    = v
         l_Node  = list(filter(
-                lambda n: n.str_name == str_parentNode, 
+                lambda n: n.str_name == str_name, 
                 self.l_Node
         ))
         if len(l_Node):
             d_ret['Node']   = l_Node[0]
             d_ret['status'] = True
+            d_ret['index']  = [i for i,j in enumerate(self.l_Node) if j.str_name == str_name]
         return d_ret
 
     def node_connect(self, *args, **kwargs):
@@ -198,22 +212,21 @@ class FDG:
             if k == 'toChildNode':      lstr_childNode  = v
         
         # Find parentNode in internal list
-        Nodeparent      = self.Node_filterOnName(name = str_parentNode)['Node']
+        d_nodeParent    = self.Node_filterOnName(name = str_parentNode)
+        Nodeparent      = d_nodeParent['Node']
+        parentIndex     = d_nodeParent['index']
         if Nodeparent:
             for str_child in lstr_childNode:
                 # Find childNode in internal list
-                Nodechild   = self.Node_filterOnName(name = str_child)['Node']
+                d_nodechild = self.Node_filterOnName(name = str_child)
+                Nodechild   = d_nodechild['Node']
+                childIndex  = d_nodechild['index']
                 if Nodechild:
                     Nodeparent.connectTo(Node = Nodechild)
-
-    def connect(self, *args, **kwargs):
-        """
-        Connect each node to a random sample (of size <spoke>)
-        drawn from list of all nodes.
-        """
-        self.dp.qprint('Connecting each node to sample of %d other nodes...' % self.spokes)
-        for k,v in self.d_nodeNeighbor.items():
-            self.d_nodeNeighbor[k] = random.sample(self.l_nodes, self.spokes)
+                    self.ld_links.append({
+                        "source": parentIndex,
+                        "target": childIndex
+                    })
             
     def FDGnodelist_build(self, *args, **kwargs):
         """
@@ -227,27 +240,8 @@ class FDG:
 
         self.dp.qprint('Creating node list...')
 
-        for k,v in kwargs.items():
-            if k == 'groupSpread': self.str_groupSpread = v
-            if k == 'groupID':     self.groupID         = int(v)
-            if k == 'prefix':      self.str_prefix      = v
-            if k == 'increment':   self.increment       = int(v)
-
-        lstr_ID         = [self.str_prefix] * self.nodes
-        l_IDuniform     = [self.groupID] * self.nodes
-        l_IDincrement   = list(range(self.groupID, self.groupID + self.nodes*self.increment, self.increment))
-        if self.str_groupSpread == 'uniform':
-            l_ID        = l_IDuniform
-        if self.str_groupSpread == 'increment':
-            l_ID        = l_IDincrement
-            
-        l_fullID        = ['%s%d' % (s, i) for (s, i) in zip(lstr_ID, l_IDincrement)]
-
-        for n in range(self.nodes):
-            self.ld_nodes.append({
-                "id":       l_fullID[n],
-                "group":    l_ID[n]
-            })
+        for Node in self.l_Node:
+            self.ld_nodes.append(Node.d_desc)
 
         self.d_nodes = {
             'nodes': self.ld_nodes
@@ -262,19 +256,8 @@ class FDG:
 
         self.dp.qprint('Creating link list...')
 
-        linkValue = 1
-        for k,v in kwargs.items():
-            if k == 'linkValue':    linkValue = int(v)
-
-        for k, l_node in self.d_nodeNeighbor.items():
-            for neighbor in l_node:
-                self.ld_links.append({
-                    "source":   self.ld_nodes[k]['id'],
-                    "target":   self.ld_nodes[neighbor]['id'],
-                    "value":    linkValue
-                })
-        self.d_links = {
-            'links': self.ld_links
+        self.d_links    = {
+            "links": self.ld_links
         }
 
         return self.d_links
@@ -304,7 +287,6 @@ class FDG:
         Main run method.
         """
 
-        self.connect()
         self.FDG_build(**kwargs)
 
 if __name__ == "__main__":
