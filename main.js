@@ -40,7 +40,7 @@ var size = d3.scale.pow().exponent(1)
 
 var force = d3.layout.force()
     .linkDistance(60)
-    .charge(-300)
+    .charge(-1000)
     .size([w, h]);
 
 var default_node_color = "#ccc";
