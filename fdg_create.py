@@ -63,6 +63,10 @@ class Node:
 
         self.__name__           = "node"
 
+        self.verbosity          = -1
+        for k,v in kwargs.items():
+            if k == 'verbosity':    self.verbosity  = int(v)
+
         self.d_desc = {
             "id":       "",
             "type":     "circle",
@@ -71,16 +75,10 @@ class Node:
             "size":     10
         }
 
-        # self.str_name           = ""
-        # self.str_type           = "circle"
-        # self.size               = 10
-        # self.f_score            = 0.5
-        # self.group              = None
-
         self.l_connectedTo      = []
 
         self.dp                 = pfmisc.debug(    
-                                            verbosity   = 0,
+                                            verbosity   = self.verbosity,
                                             level       = -1,
                                             within      = self.__name__
                                             )
@@ -91,10 +89,9 @@ class Node:
             if k == 'size':     self.d_desc["size"]     = int(v)
             if k == 'score':    self.d_desc["score"]    = float(v)
             if k == 'group':    self.d_desc["group"]    = int(v)
-            if k == 'nodeLine': self.d_desc             = v
+            if k == 'nodeInfo': self.d_desc             = v
         
-        self.dp.qprint('Node created.')
-        self.dp.qprint(self)
+        self.dp.qprint('Node created: %s' % self, level = 2)
 
     def __str__(self):
         return """
@@ -128,6 +125,9 @@ class FDG:
 
         self.__name__           = 'FDG'
 
+        self.verbosity          = -1
+        for k,v in kwargs.items():
+            if k == 'verbosity':    self.verbosity  = int(v)
 
         # nodelist vars
         self.d_mesh             = {}                # The whole mesh containing
@@ -152,7 +152,7 @@ class FDG:
         self.str_saveFile       = ''
 
         self.dp                 = pfmisc.debug(    
-                                            verbosity   = 0,
+                                            verbosity   = self.verbosity,
                                             level       = -1,
                                             within      = self.__name__
                                             )
@@ -165,18 +165,30 @@ class FDG:
         """
         Add a node to the list of nodes.
         """
+
+        self.dp.qprint('Adding node(s) to FDG structure', level = 1)
+
+        l_inputInfo = []
         for k,v in kwargs.items():
-            if k == 'nodeInfo': self.d_nodeLine = v
+            if k == 'nodeInfo': 
+                self.d_nodeLine = v
+                l_inputInfo.append(v)
+            if k == 'nodeList': l_inputInfo     = v
 
-        self.l_Node.append(Node(
-            nodeInfo = self.d_nodeLine
-        ))
-        self.lstr_nodeID.append(
-            self.d_nodeLine['id']
-        )
-        self.l_nodeID   = list(range(0, len(self.l_Node)))
+        if len(l_inputInfo):
+            for d_nodeInfo in l_inputInfo:
+                N   = Node(
+                    nodeInfo    = d_nodeInfo,
+                    verbosity   = self.verbosity
+                )
+                self.l_Node.append(N)
+                self.lstr_nodeID.append(
+                    d_nodeInfo['id']
+                )
+                self.dp.qprint('(%s)' % d_nodeInfo['id'])
+                self.l_nodeID   = list(range(0, len(self.l_Node)))
 
-    def Node_filterOnName(self, *args, **kwargs):
+    def Node_filterOnID(self, *args, **kwargs):
         """
         Return a Node, filtered on a name string.
         """
@@ -185,17 +197,17 @@ class FDG:
             'Node':     None,
             'index':    0
         }
-        str_name    = ""
+        str_id    = ""
         for k,v in kwargs.items():
-            if k == 'name': str_name    = v
+            if k == 'id': str_id    = v
         l_Node  = list(filter(
-                lambda n: n.str_name == str_name, 
+                lambda n: n.d_desc['id'] == str_id, 
                 self.l_Node
         ))
         if len(l_Node):
             d_ret['Node']   = l_Node[0]
             d_ret['status'] = True
-            d_ret['index']  = [i for i,j in enumerate(self.l_Node) if j.str_name == str_name]
+            d_ret['index']  = [i for i,j in enumerate(self.l_Node) if j.d_desc['id'] == str_id][0]
         return d_ret
 
     def node_connect(self, *args, **kwargs):
@@ -208,17 +220,18 @@ class FDG:
         Nodeparent      = None
                 
         for k,v in kwargs.items():
-            if k == 'parentNode':       str_parentNode  = v
-            if k == 'toChildNode':      lstr_childNode  = v
+            if k == 'fromNode':         str_parentNode  = v
+            if k == 'toNode':           lstr_childNode  = v
         
+
         # Find parentNode in internal list
-        d_nodeParent    = self.Node_filterOnName(name = str_parentNode)
+        d_nodeParent    = self.Node_filterOnID(id = str_parentNode)
         Nodeparent      = d_nodeParent['Node']
         parentIndex     = d_nodeParent['index']
         if Nodeparent:
             for str_child in lstr_childNode:
                 # Find childNode in internal list
-                d_nodechild = self.Node_filterOnName(name = str_child)
+                d_nodechild = self.Node_filterOnID(id = str_child)
                 Nodechild   = d_nodechild['Node']
                 childIndex  = d_nodechild['index']
                 if Nodechild:
@@ -227,6 +240,22 @@ class FDG:
                         "source": parentIndex,
                         "target": childIndex
                     })
+                    self.dp.qprint('Connecting  %10s <---> %s' %\
+                            (str_parentNode, lstr_childNode),
+                            level = 1)
+
+    def node_connectLinearChain(self, *args, **kwargs):
+        """
+        Given a list of nodes, connect them one to the next in 
+        list order
+        """
+        l_chain     = []
+        for k,v in kwargs.items():
+            if k == 'chain':    l_chain = v
+        
+        for N, M in zip(l_chain[:-1],l_chain[1:]):
+            self.node_connect(fromNode = N['id'], toNode = [M['id']])
+
             
     def FDGnodelist_build(self, *args, **kwargs):
         """
@@ -267,7 +296,7 @@ class FDG:
         Assemble and save the final force directed graph.
         """
 
-        self.dp.qprint('Assembling FDG...')
+        self.dp.qprint('Assembling FDG...', level = 1)
 
         for k,v in kwargs.items():
             if k == 'saveFile':   self.str_saveFile    = v
@@ -276,8 +305,13 @@ class FDG:
         self.FDGlinklist_build(**kwargs)
         self.d_mesh.update(self.d_nodes)
         self.d_mesh.update(self.d_links)
+
+        self.d_mesh['graph']        = []
+        self.d_mesh['directed']     = False
+        self.d_mesh['multigraph']   = False
+
         if len(self.str_saveFile):
-            self.dp.qprint('Saving mesh to %s...' % self.str_saveFile)
+            self.dp.qprint('Saving mesh to %s...' % self.str_saveFile, level = 1)
             with open(self.str_saveFile, 'w') as f:
                 json.dump(self.d_mesh, f, sort_keys = True, indent = 4)
 
@@ -286,62 +320,12 @@ class FDG:
         """
         Main run method.
         """
-
         self.FDG_build(**kwargs)
 
 if __name__ == "__main__":
     
     parser  = ArgumentParser(description = str_desc, formatter_class = RawTextHelpFormatter)
 
-    parser.add_argument(
-        '--spokes',
-        action  = 'store',
-        dest    = 'spokes',
-        default = '3',
-        help    = 'Number of spokes (edges) from each node.'
-    )
-    parser.add_argument(
-        '--nodes',
-        action  = 'store',
-        dest    = 'nodes',
-        default = '20',
-        help    = 'Number of nodes in mesh graph.'
-    )
-    parser.add_argument(
-        '--prefix',
-        action  = 'store',
-        dest    = 'prefix',
-        default = 'linkm',
-        help    = 'Prefix for group name'
-    )
-    parser.add_argument(
-        '--groupSpread',
-        action  = 'store',
-        dest    = 'groupSpread',
-        default = 'uniform',
-        help    = 'Group ID spread in graph.'
-    )
-    parser.add_argument(
-        '--groupID',
-        action  = 'store',
-        dest    = 'groupID',
-        default = '1',
-        help    = 'Group ID start.'
-    )
-    parser.add_argument(
-        '--increment',
-        action  = 'store',
-        dest    = 'increment',
-        default = '1',
-        help    = 'Group ID increment.'
-    )
-    parser.add_argument(
-        '--linkValue',
-        action  = 'store',
-        dest    = 'linkValue',
-        default = '1',
-        help    = 'Link connection value.'
-    )
     parser.add_argument(
         '--saveFile',
         action  = 'store',
@@ -354,16 +338,3 @@ if __name__ == "__main__":
 
     print(str_desc)
 
-    M = FDG(   
-                spokes          = int(args.spokes), 
-                nodes           = int(args.nodes)
-            )
-
-    FDG.run(      
-                prefix          = args.prefix,
-                groupSpread     = args.groupSpread,
-                groupID         = args.groupID,
-                increment       = args.increment,
-                linkValue       = args.linkValue,
-                saveFile        = args.saveFile
-        )
