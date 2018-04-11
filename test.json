@@ -1,8 +1,7 @@
 {
     "directed": false,
     "graph": [],
-    "links": [
-        {
+    "links": [{
             "source": 0,
             "target": 1
         },
@@ -100,7 +99,8 @@
         },
         {
             "source": 9,
-            "target": 10
+            <<
+            << << < HEAD "target": 10
         },
         {
             "source": 10,
@@ -164,7 +164,54 @@
         },
         {
             "source": 85,
-            "target": 28
+            "target": 28 ===
+                === =
+                "target": 7
+        },
+        {
+            "source": 7,
+            "target": 5
+        },
+        {
+            "source": 7,
+            "target": 4
+        },
+        {
+            "source": 3,
+            "target": 4
+        },
+        {
+            "source": 3,
+            "target": 5
+        },
+        {
+            "source": 3,
+            "target": 2
+        },
+        {
+            "source": 3,
+            "target": 6
+        },
+        {
+            "source": 2,
+            "target": 6
+        },
+        {
+            "source": 2,
+            "target": 26
+        },
+        {
+            "source": 3,
+            "target": 33
+        },
+        {
+            "source": 20,
+            "target": 21
+        },
+        {
+            "source": 21,
+            "target": 22 >>>
+                >>> > First commit.
         },
         {
             "source": 22,
@@ -182,16 +229,18 @@
             "source": 25,
             "target": 26
         },
-        {
-            "source": 26,
+        { <<
+            << << < HEAD "source": 26,
             "target": 27
         },
-        {
+        { ===
+            === = >>>
+            >>> > First commit.
             "source": 27,
             "target": 28
         },
-        {
-            "source": 22,
+        { <<
+            << << < HEAD "source": 22,
             "target": 29
         },
         {
@@ -204,7 +253,19 @@
         },
         {
             "source": 31,
+            "target": 30 ===
+                === =
+                "source": 28,
+            "target": 29
+        },
+        {
+            "source": 29,
             "target": 30
+        },
+        {
+            "source": 30,
+            "target": 31 >>>
+                >>> > First commit.
         },
         {
             "source": 31,
@@ -212,7 +273,8 @@
         },
         {
             "source": 32,
-            "target": 29
+            <<
+            << << < HEAD "target": 29
         },
         {
             "source": 32,
@@ -468,87 +530,310 @@
         }
     ],
     "multigraph": false,
-    "nodes": [
-        {
+    "nodes": [{
             "id": "w0",
+            ===
+            === =
+            "target": 33
+        },
+        {
+            "source": 20,
+            "target": 1
+        },
+        {
+            "source": 27,
+            "target": 12
+        },
+        {
+            "source": 27,
+            "target": 13
+        },
+        {
+            "source": 14,
+            "target": 12
+        },
+        {
+            "source": 14,
+            "target": 13
+        },
+        {
+            "source": 14,
+            "target": 15
+        },
+        {
+            "source": 15,
+            "target": 12
+        },
+        {
+            "source": 15,
+            "target": 16
+        },
+        {
+            "source": 15,
+            "target": 17
+        },
+        {
+            "source": 15,
+            "target": 18
+        },
+        {
+            "source": 19,
+            "target": 16
+        },
+        {
+            "source": 19,
+            "target": 17
+        },
+        {
+            "source": 19,
+            "target": 18
+        }
+    ],
+    "multigraph": false,
+    "nodes": [{
+            "id": "BCH",
+            "score": 0.8,
+            "size": 200,
+            "type": "circle"
+        },
+        {
+            "id": "webclient",
+            "score": 0.7,
+            "size": 100
+        },
+        {
+            "id": "CUBE",
+            "score": 0.1,
+            "size": 300,
+            "type": "circle"
+        },
+        {
+            "id": "pfcon",
+            "score": 0.2,
+            "size": 200
+        },
+        {
+            "id": "pfioh-r1",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "pman-r1",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "storage-r1",
+            "score": 0.3,
+            "size": 10
+        },
+        {
+            "id": "swarm",
+            "score": 0.3,
+            "size": 1
+        },
+        {
+            "id": "pfdcm",
+            "score": 1.0,
+            "size": 1
+        },
+        {
+            "id": "pl-pacs",
+            "score": 1.0,
+            "size": 1
+        },
+        {
+            "id": "PACS",
+            "score": 1.0,
+            "size": 20
+        },
+        {
+            "id": "orthanc",
+            "score": 1.0,
+            "size": 15
+        },
+        {
+            "id": "pman-cloud",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "pfioh-cloud",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "storage-cloud",
+            "score": 0.3,
+            "size": 10
+        },
+        {
+            "id": "openshift",
+            "score": 0.3,
+            "size": 10
+        },
+        {
+            "id": "pl-container1",
+            "score": 1.0,
+            "size": 10
+        },
+        {
+            "id": "pl-container2",
+            "score": 1.0,
+            "size": 10
+        },
+        {
+            "id": "pl-container3",
+            "score": 1.0,
+            "size": 10
+        },
+        {
+            "id": "MOC",
+            "score": 1.0,
+            "size": 200
+        },
+        {
+            "id": "l0",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "w1",
+        { <<
+            << << < HEAD "id": "w1",
+            ===
+            === =
+            "id": "l1",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "w2",
+        { <<
+            << << < HEAD "id": "w2",
+            ===
+            === =
+            "id": "l2",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "w3",
+        { <<
+            << << < HEAD "id": "w3",
+            ===
+            === =
+            "id": "l3",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "w4",
+        { <<
+            << << < HEAD "id": "w4",
+            ===
+            === =
+            "id": "l4",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "w5",
+        { <<
+            << << < HEAD "id": "w5",
+            ===
+            === =
+            "id": "l5",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "w6",
+        { <<
+            << << < HEAD "id": "w6",
+            ===
+            === =
+            "id": "l6",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "00",
+        { <<
+            << << < HEAD "id": "00",
+            ===
+            === =
+            "id": "n0",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "01",
+        { <<
+            << << < HEAD "id": "01",
+            ===
+            === =
+            "id": "n1",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "02",
+        { <<
+            << << < HEAD "id": "02",
+            ===
+            === =
+            "id": "n2",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "03",
+        { <<
+            << << < HEAD "id": "03",
+            ===
+            === =
+            "id": "n3",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "04",
+        { <<
+            << << < HEAD "id": "04",
+            ===
+            === =
+            "id": "n4",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "05",
+        { <<
+            << << < HEAD "id": "05",
+            ===
+            === =
+            "id": "n5",
+            >>>
+            >>> > First commit.
             "score": 0.5,
             "size": 1,
             "type": "circle"
         },
-        {
-            "id": "06",
+        { <<
+            << << < HEAD "id": "06",
             "score": 0.5,
             "size": 1,
             "type": "circle"
@@ -981,7 +1266,13 @@
         {
             "id": "orthanc",
             "score": 1.0,
-            "size": 15
+            "size": 15 ===
+                === =
+                "id": "n6",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle" >>>
+                >>> > First commit.
         }
     ]
 }

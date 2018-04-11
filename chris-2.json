@@ -1,8 +1,7 @@
 {
     "directed": false,
     "graph": [],
-    "links": [
-        {
+    "links": [{
             "source": 0,
             "target": 1
         },
@@ -240,8 +239,7 @@
         }
     ],
     "multigraph": false,
-    "nodes": [
-        {
+    "nodes": [{
             "id": "w0",
             "score": 0.5,
             "size": 1,
