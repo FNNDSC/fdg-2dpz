@@ -1,0 +1,17 @@
+{
+  "graph": [],
+  "links": [
+    {"source": "c1", "target": "c2"},
+    {"source": "c2", "target": "c3"},
+    {"source": "c4", "target": "c4"},
+    {"source": "c4", "target": "c1"}
+  ],
+  "nodes": [
+    {"size": 60, "score": 0.0, "id": "c1", "type": "circle"},
+    {"size": 10, "score": 0.2, "id": "c2", "type": "circle"},
+    {"size": 60, "score": 0.4, "id": "c3", "type": "circle"},
+    {"size": 10, "score": 0.6, "id": "c4", "type": "circle"}
+  ],
+  "directed": false,
+  "multigraph": false
+}

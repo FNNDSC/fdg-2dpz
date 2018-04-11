@@ -1,0 +1,226 @@
+{
+    "directed": false,
+    "graph": [],
+    "links": [
+        {
+            "source": 0,
+            "target": 10
+        },
+        {
+            "source": 0,
+            "target": 12
+        },
+        {
+            "source": 10,
+            "target": 8
+        },
+        {
+            "source": 12,
+            "target": 8
+        },
+        {
+            "source": 8,
+            "target": 9
+        },
+        {
+            "source": 9,
+            "target": 7
+        },
+        {
+            "source": 7,
+            "target": 5
+        },
+        {
+            "source": 7,
+            "target": 4
+        },
+        {
+            "source": 3,
+            "target": 4
+        },
+        {
+            "source": 3,
+            "target": 5
+        }
+    ],
+    "multigraph": false,
+    "nodes": [
+        {
+            "id": "BCH",
+            "score": 0.1,
+            "size": 100,
+            "type": "circle"
+        },
+        {
+            "id": "webclient",
+            "score": 0.5,
+            "size": 10
+        },
+        {
+            "id": "CUBE",
+            "score": 0.1,
+            "size": 150,
+            "type": "circle"
+        },
+        {
+            "id": "pfcon",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "pfioh-r1",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "pman-r1",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "storage-r1",
+            "score": 0.3,
+            "size": 10
+        },
+        {
+            "id": "swarm",
+            "score": 0.3,
+            "size": 1
+        },
+        {
+            "id": "pfdcm",
+            "score": 1.0,
+            "size": 1
+        },
+        {
+            "id": "pl-pacs",
+            "score": 1.0,
+            "size": 1
+        },
+        {
+            "id": "PACS",
+            "score": 1.0,
+            "size": 20
+        },
+        {
+            "id": "pl-orthanc",
+            "score": 1.0,
+            "size": 15
+        },
+        {
+            "id": "orthanc",
+            "score": 1.0,
+            "size": 15
+        },
+        {
+            "id": "link1",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "link2",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "link3",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "link4",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "link5",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "link6",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "link7",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "linkc1",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "linkc2",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "linkc3",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "linkc4",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "linkc5",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "linkc6",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "linkc7",
+            "score": 0.5,
+            "size": 1
+        },
+        {
+            "id": "pman-cloud",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "pfioh-cloud",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "storage-cloud",
+            "score": 0.3,
+            "size": 10
+        },
+        {
+            "id": "openshift",
+            "score": 0.3,
+            "size": 10
+        },
+        {
+            "id": "pl-container1",
+            "score": 1.0,
+            "size": 10
+        },
+        {
+            "id": "pl-container2",
+            "score": 1.0,
+            "size": 10
+        },
+        {
+            "id": "pl-container3",
+            "score": 1.0,
+            "size": 10
+        },
+        {
+            "id": "MOC",
+            "score": 1.0,
+            "size": 200
+        }
+    ]
+}
