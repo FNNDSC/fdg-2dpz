@@ -103,13 +103,18 @@ if __name__ == "__main__":
         links       = 7,
         nodeInfo    = {'score' : 0.5, 'size': 1, 'type': 'circle'}
     )
+    l_chain3    = chain_create(
+        prefix      = 'm',
+        links       = 7,
+        nodeInfo    = {'score' : 0.5, 'size': 1, 'type': 'circle'}
+    )
 
     F.node_add(
         nodeList = [
             {"id": "BCH",             "score": 0.8,       "size": 200, "type": "circle"},
             {"id": "webclient",       "score": 0.7,       "size": 100},
-            {"id": "CUBE",            "score": 0.1,       "size": 300, "type": "circle"},
-            {"id": "pfcon",           "score": 0.2,       "size": 200},
+            {"id": "CUBE",            "score": 0.1,       "size": 250, "type": "circle"},
+            {"id": "pfcon",           "score": 0.2,       "size": 250},
             {"id": "pfioh-r1",        "score": 0.2,       "size": 100},    
             {"id": "pman-r1",         "score": 0.2,       "size": 100},
             {"id": "storage-r1",      "score": 0.3,       "size": 10},    
@@ -130,6 +135,7 @@ if __name__ == "__main__":
     )
     F.node_add(nodeList     = l_chain1)
     F.node_add(nodeList     = l_chain2)
+    # F.node_add(nodeList     = l_chain3)
     
     F.node_connect(fromNode = "BCH",        toNode = ["PACS", "orthanc"])
     F.node_connect(fromNode = "PACS",       toNode = ["pfdcm"])
@@ -142,9 +148,11 @@ if __name__ == "__main__":
     F.node_connect(fromNode = "CUBE",       toNode = ["storage-r1"])
     F.node_connect(fromNode = "CUBE",       toNode = ["l6"])
     F.node_connect(fromNode = "pfcon",      toNode = ["n6"])
+    # F.node_connect(fromNode = "pfcon",      toNode = ["m6"])
 
     F.node_connectLinearChain(chain = l_chain1)
     F.node_connectLinearChain(chain = l_chain2)
+    # F.node_connectLinearChain(chain = l_chain3)
     
     F.node_connect(fromNode = "l0",             toNode = ["webclient"])
     F.node_connect(fromNode = "n0",             toNode = ["pman-cloud", "pfioh-cloud"])
