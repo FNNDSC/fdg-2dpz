@@ -83,33 +83,63 @@ if __name__ == "__main__":
         '--verbosity',
         action  = 'store',
         dest    = 'str_verbosity',
-        default = 0,
+        default = '0',
         help    = 'Verbosity level for app.'
+    )
+    parser.add_argument(
+        '--chains',
+        action  = 'store',
+        dest    = 'str_chains',
+        default = 1,
+        help    = 'Number of remote compute env chains.'
+    )
+    parser.add_argument(
+        '--chainLength',
+        action  = 'store',
+        dest    = 'str_chainLength',
+        default = '7',
+        help    = 'Number of remote compute env chains.'
     )
     
     args            = parser.parse_args()
 
     print(str_desc)
 
-    F = FDG.FDG(verbosity = args.str_verbosity)
+    F = FDG.FDG(verbosity = int(args.str_verbosity))
 
+    # Chain to webclient
     l_chain1    = chain_create(
-        prefix      = 'l',
-        links       = 7,
+        prefix      = 'w',
+        links       = int(args.str_chainLength),
         nodeInfo    = {'score' : 0.5, 'size': 1, 'type': 'circle'}
     )
-    l_chain2    = chain_create(
-        prefix      = 'n',
-        links       = 7,
-        nodeInfo    = {'score' : 0.5, 'size': 1, 'type': 'circle'}
-    )
-    l_chain3    = chain_create(
-        prefix      = 'm',
-        links       = 7,
-        nodeInfo    = {'score' : 0.5, 'size': 1, 'type': 'circle'}
-    )
+    F.node_add(nodeList     = l_chain1)
+    F.node_connectLinearChain(chain = l_chain1)
+
+    # Chains to RCEs
+    d_chainRCE  = {}
+    l_chainRCE  = range(0, int(args.str_chains))
+    for chain in l_chainRCE:
+        d_chainRCE[chain] = chain_create(
+            prefix      = str(chain),
+            links       = int(args.str_chainLength),
+            nodeInfo    = {'score' : 0.5, 'size': 1, 'type': 'circle'}
+        )
+        F.node_add(nodeList = d_chainRCE[chain])
+        # RCE Nodes
+        F.node_add(nodeList = [
+            {"id": "pman-cloud%d"       % chain,    "score": 0.2,       "size": 100},
+            {"id": "pfioh-cloud%d"      % chain,    "score": 0.2,       "size": 100},    
+            {"id": "storage-cloud%d"    % chain,    "score": 0.3,       "size": 10},    
+            {"id": "openshift%d"        % chain,    "score": 0.3,       "size": 10},
+            {"id": "pl-container1%d"    % chain,    "score": 1.0,       "size": 10},
+            {"id": "pl-container2%d"    % chain,    "score": 1.0,       "size": 10},
+            {"id": "pl-container3%d"    % chain,    "score": 1.0,       "size": 10},
+            {"id": "MOC%d"              % chain,    "score": 1.0,       "size": 200}           
+        ])
 
     F.node_add(
+        # BCH Nodes
         nodeList = [
             {"id": "BCH",             "score": 0.8,       "size": 200, "type": "circle"},
             {"id": "webclient",       "score": 0.7,       "size": 100},
@@ -122,21 +152,12 @@ if __name__ == "__main__":
             {"id": "pfdcm",           "score": 1.0,       "size": 1},
             {"id": "pl-pacs",         "score": 1.0,       "size": 1},
             {"id": "PACS",            "score": 1.0,       "size": 20},    
-            {"id": "orthanc",         "score": 1.0,       "size": 15},
-            {"id": "pman-cloud",      "score": 0.2,       "size": 100},
-            {"id": "pfioh-cloud",     "score": 0.2,       "size": 100},    
-            {"id": "storage-cloud",   "score": 0.3,       "size": 10},    
-            {"id": "openshift",       "score": 0.3,       "size": 10},
-            {"id": "pl-container1",   "score": 1.0,       "size": 10},
-            {"id": "pl-container2",   "score": 1.0,       "size": 10},
-            {"id": "pl-container3",   "score": 1.0,       "size": 10},
-            {"id": "MOC",             "score": 1.0,       "size": 200}           
+            {"id": "orthanc",         "score": 1.0,       "size": 15}
         ]
     )
-    F.node_add(nodeList     = l_chain1)
-    F.node_add(nodeList     = l_chain2)
-    # F.node_add(nodeList     = l_chain3)
+    F.node_connect(fromNode = "w0",         toNode = ["webclient"])
     
+    # BCH Side
     F.node_connect(fromNode = "BCH",        toNode = ["PACS", "orthanc"])
     F.node_connect(fromNode = "PACS",       toNode = ["pfdcm"])
     F.node_connect(fromNode = "orthanc",    toNode = ["pfdcm"])
@@ -146,19 +167,31 @@ if __name__ == "__main__":
     F.node_connect(fromNode = "swarm",      toNode = ["pfioh-r1"])
     F.node_connect(fromNode = "pfcon",      toNode = ["pfioh-r1", "pman-r1", "CUBE", "storage-r1"])
     F.node_connect(fromNode = "CUBE",       toNode = ["storage-r1"])
-    F.node_connect(fromNode = "CUBE",       toNode = ["l6"])
-    F.node_connect(fromNode = "pfcon",      toNode = ["n6"])
-    # F.node_connect(fromNode = "pfcon",      toNode = ["m6"])
+    F.node_connect(fromNode = "CUBE",       toNode = ["w6"])
 
-    F.node_connectLinearChain(chain = l_chain1)
-    F.node_connectLinearChain(chain = l_chain2)
-    # F.node_connectLinearChain(chain = l_chain3)
-    
-    F.node_connect(fromNode = "l0",             toNode = ["webclient"])
-    F.node_connect(fromNode = "n0",             toNode = ["pman-cloud", "pfioh-cloud"])
-    F.node_connect(fromNode = "storage-cloud",  toNode = ["pman-cloud", "pfioh-cloud", "openshift"])
-    F.node_connect(fromNode = "openshift",      toNode = ["pman-cloud", "pl-container1", "pl-container2", "pl-container3"])
-    F.node_connect(fromNode = "MOC",            toNode = ["pl-container1", "pl-container2", "pl-container3"])
+    # Remote Computing Environment
+    for chain in l_chainRCE:
+        str_nodeEnd     = "%s%d" % (str(chain), int(args.str_chainLength)-1)
+        str_nodeStart   = "%s0" % str(chain)
+        F.node_connect(fromNode = "pfcon",  toNode = ["%s%d" % \
+                    (str(chain), int(args.str_chainLength)-1)])
+        F.node_connectLinearChain(chain = d_chainRCE[chain])
+        F.node_connect( fromNode    = str_nodeStart,    
+                        toNode      = [ "pman-cloud%d"      % chain, 
+                                        "pfioh-cloud%d"     % chain])
+        F.node_connect( fromNode    =   "storage-cloud%d"   % chain,  
+                        toNode      = [ "pman-cloud%d"      % chain, 
+                                        "pfioh-cloud%d"     % chain, 
+                                        "openshift%d"       % chain])
+        F.node_connect( fromNode    =   "openshift%d"       % chain,      
+                        toNode      = [ "pman-cloud%d"      % chain, 
+                                        "pl-container1%d"   % chain, 
+                                        "pl-container2%d"   % chain, 
+                                        "pl-container3%d"   % chain])
+        F.node_connect( fromNode    =   "MOC%d"             % chain,            
+                        toNode      = [ "pl-container1%d"   % chain, 
+                                        "pl-container2%d"   % chain, 
+                                        "pl-container3%d"   % chain])
 
     F.FDG_build(saveFile = args.str_saveFile)
 
