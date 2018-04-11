@@ -54,9 +54,11 @@ var max_stroke = 4.5;
 var max_base_node_size = 36;
 var min_zoom = 0.1;
 var max_zoom = 7;
-var svg = d3.select("body").append("svg");
+// var svg = d3.select("body").append("svg");
+var svg = d3.select("svg");
 var zoom = d3.behavior.zoom().scaleExtent([min_zoom, max_zoom])
-var g = svg.append("g");
+    // var g = svg.append("g");
+var g = d3.select("g");
 svg.style("cursor", "move");
 
 // d3.json("graph.json", function(error, graph) {
