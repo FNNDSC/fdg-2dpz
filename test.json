@@ -1,0 +1,355 @@
+{
+    "directed": false,
+    "graph": [],
+    "links": [
+        {
+            "source": 0,
+            "target": 10
+        },
+        {
+            "source": 0,
+            "target": 11
+        },
+        {
+            "source": 10,
+            "target": 8
+        },
+        {
+            "source": 11,
+            "target": 8
+        },
+        {
+            "source": 8,
+            "target": 9
+        },
+        {
+            "source": 9,
+            "target": 7
+        },
+        {
+            "source": 7,
+            "target": 5
+        },
+        {
+            "source": 7,
+            "target": 4
+        },
+        {
+            "source": 3,
+            "target": 4
+        },
+        {
+            "source": 3,
+            "target": 5
+        },
+        {
+            "source": 3,
+            "target": 2
+        },
+        {
+            "source": 3,
+            "target": 6
+        },
+        {
+            "source": 2,
+            "target": 6
+        },
+        {
+            "source": 2,
+            "target": 26
+        },
+        {
+            "source": 3,
+            "target": 33
+        },
+        {
+            "source": 20,
+            "target": 21
+        },
+        {
+            "source": 21,
+            "target": 22
+        },
+        {
+            "source": 22,
+            "target": 23
+        },
+        {
+            "source": 23,
+            "target": 24
+        },
+        {
+            "source": 24,
+            "target": 25
+        },
+        {
+            "source": 25,
+            "target": 26
+        },
+        {
+            "source": 27,
+            "target": 28
+        },
+        {
+            "source": 28,
+            "target": 29
+        },
+        {
+            "source": 29,
+            "target": 30
+        },
+        {
+            "source": 30,
+            "target": 31
+        },
+        {
+            "source": 31,
+            "target": 32
+        },
+        {
+            "source": 32,
+            "target": 33
+        },
+        {
+            "source": 20,
+            "target": 1
+        },
+        {
+            "source": 27,
+            "target": 12
+        },
+        {
+            "source": 27,
+            "target": 13
+        },
+        {
+            "source": 14,
+            "target": 12
+        },
+        {
+            "source": 14,
+            "target": 13
+        },
+        {
+            "source": 14,
+            "target": 15
+        },
+        {
+            "source": 15,
+            "target": 12
+        },
+        {
+            "source": 15,
+            "target": 16
+        },
+        {
+            "source": 15,
+            "target": 17
+        },
+        {
+            "source": 15,
+            "target": 18
+        },
+        {
+            "source": 19,
+            "target": 16
+        },
+        {
+            "source": 19,
+            "target": 17
+        },
+        {
+            "source": 19,
+            "target": 18
+        }
+    ],
+    "multigraph": false,
+    "nodes": [
+        {
+            "id": "BCH",
+            "score": 0.8,
+            "size": 200,
+            "type": "circle"
+        },
+        {
+            "id": "webclient",
+            "score": 0.7,
+            "size": 100
+        },
+        {
+            "id": "CUBE",
+            "score": 0.1,
+            "size": 300,
+            "type": "circle"
+        },
+        {
+            "id": "pfcon",
+            "score": 0.2,
+            "size": 200
+        },
+        {
+            "id": "pfioh-r1",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "pman-r1",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "storage-r1",
+            "score": 0.3,
+            "size": 10
+        },
+        {
+            "id": "swarm",
+            "score": 0.3,
+            "size": 1
+        },
+        {
+            "id": "pfdcm",
+            "score": 1.0,
+            "size": 1
+        },
+        {
+            "id": "pl-pacs",
+            "score": 1.0,
+            "size": 1
+        },
+        {
+            "id": "PACS",
+            "score": 1.0,
+            "size": 20
+        },
+        {
+            "id": "orthanc",
+            "score": 1.0,
+            "size": 15
+        },
+        {
+            "id": "pman-cloud",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "pfioh-cloud",
+            "score": 0.2,
+            "size": 100
+        },
+        {
+            "id": "storage-cloud",
+            "score": 0.3,
+            "size": 10
+        },
+        {
+            "id": "openshift",
+            "score": 0.3,
+            "size": 10
+        },
+        {
+            "id": "pl-container1",
+            "score": 1.0,
+            "size": 10
+        },
+        {
+            "id": "pl-container2",
+            "score": 1.0,
+            "size": 10
+        },
+        {
+            "id": "pl-container3",
+            "score": 1.0,
+            "size": 10
+        },
+        {
+            "id": "MOC",
+            "score": 1.0,
+            "size": 200
+        },
+        {
+            "id": "l0",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "l1",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "l2",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "l3",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "l4",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "l5",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "l6",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "n0",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "n1",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "n2",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "n3",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "n4",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "n5",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        },
+        {
+            "id": "n6",
+            "score": 0.5,
+            "size": 1,
+            "type": "circle"
+        }
+    ]
+}
