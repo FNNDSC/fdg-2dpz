@@ -108,8 +108,8 @@ if __name__ == "__main__":
         nodeList = [
             {"id": "BCH",             "score": 0.8,       "size": 200, "type": "circle"},
             {"id": "webclient",       "score": 0.7,       "size": 100},
-            {"id": "CUBE",            "score": 0.1,       "size": 150, "type": "circle"},
-            {"id": "pfcon",           "score": 0.2,       "size": 150},
+            {"id": "CUBE",            "score": 0.1,       "size": 300, "type": "circle"},
+            {"id": "pfcon",           "score": 0.2,       "size": 200},
             {"id": "pfioh-r1",        "score": 0.2,       "size": 100},    
             {"id": "pman-r1",         "score": 0.2,       "size": 100},
             {"id": "storage-r1",      "score": 0.3,       "size": 10},    
