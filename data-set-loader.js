@@ -9,9 +9,11 @@ function graphSet_jsonFileLoad(astr_jsonFileName) {
 function getGraphDataSets() {
 
     let l_graph = [
-        'graph',
+        'chris-1',
         'chris-2',
-        'test'
+        'chris-3',
+        'chris-4',
+        'chris-5'
     ];
 
     let l_graphFunction = [];
