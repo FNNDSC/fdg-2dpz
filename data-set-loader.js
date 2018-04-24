@@ -13,7 +13,8 @@ function getGraphDataSets() {
         'chris-2',
         'chris-3',
         'chris-4',
-        'chris-5'
+        'chris-5',
+        'fnndsc-1'
     ];
 
     let l_graphFunction = [];
