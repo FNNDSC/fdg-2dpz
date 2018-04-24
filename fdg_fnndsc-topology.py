@@ -112,21 +112,21 @@ if __name__ == "__main__":
         # FNNDSC Nodes
         nodeList = [
             {"id": "tautona",           "score": 0.9,       "size": 800, "type": "circle"},
-            {"id": "fnndsc",            "score": 0.7,       "size": 20},
-            {"id": "pretoria",          "score": 0.1,       "size": 200, "type": "circle"},
-            {"id": "capetown",          "score": 0.2,       "size": 200},
-            {"id": "goldreef",          "score": 0.2,       "size": 200},    
-            {"id": "rc-fs-fnndsc",      "score": 0.2,       "size": 200},
+            {"id": "fnndsc",            "score": 0.1,       "size": 20},
+            {"id": "pretoria",          "score": 0.6,       "size": 200, "type": "circle"},
+            {"id": "capetown",          "score": 0.6,       "size": 200},
+            {"id": "goldreef",          "score": 0.6,       "size": 200},    
+            {"id": "rc-fs-tautona",     "score": 0.6,       "size": 200},
             {"id": "santorini",         "score": 0.3,       "size": 200},    
             {"id": "seville",           "score": 0.3,       "size": 200},
-            {"id": "hercules",          "score": 1.0,       "size": 200},
-            {"id": "hippocrates",       "score": 1.0,       "size": 200},
-            {"id": "zeus",              "score": 1.0,       "size": 200},
-            {"id": "athena",            "score": 1.0,       "size": 200},
-            {"id": "chris-tmp",         "score": 1.0,       "size": 20},    
-            {"id": "fnndsc-meg",        "score": 1.0,       "size": 20},    
-            {"id": "fnndsc-cbd",        "score": 1.0,       "size": 20},    
-            {"id": "fnndsc-cel",        "score": 1.0,       "size": 15}
+            {"id": "hercules",          "score": 0.3,       "size": 200},
+            {"id": "hippocrates",       "score": 0.3,       "size": 200},
+            {"id": "zeus",              "score": 0.3,       "size": 200},
+            {"id": "athena",            "score": 0.3,       "size": 200},
+            {"id": "chris-tmp",         "score": 0.1,       "size": 20},    
+            {"id": "fnndsc-meg",        "score": 0.1,       "size": 20},    
+            {"id": "fnndsc-cbd",        "score": 0.1,       "size": 20},    
+            {"id": "fnndsc-cel",        "score": 0.1,       "size": 20}
         ]
     ) 
 
@@ -138,8 +138,10 @@ if __name__ == "__main__":
             links       = int(args.str_chainLength),
             nodeInfo    = {'score' : 0.5, 'size': 10, 'type': 'circle'}
         )
+        pudb.set_trace()
         F.node_add(nodeList             = d_clientGroups[workstationGroup])
         F.node_connectLinearChain(chain = d_clientGroups[workstationGroup])
+        # l_nodeNames = [n for n in enumerate(d_clientGroups[workstationGroup])
         F.node_connect(fromNode = "fnndsc",     toNode = d_clientGroups[workstationGroup])
 
     # Connect main core nodes together
