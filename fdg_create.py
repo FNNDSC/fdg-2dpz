@@ -228,12 +228,18 @@ class FDG:
         d_nodeParent    = self.Node_filterOnID(id = str_parentNode)
         Nodeparent      = d_nodeParent['Node']
         parentIndex     = d_nodeParent['index']
+        childIndex      = -1
         if Nodeparent:
             for str_child in lstr_childNode:
-                # Find childNode in internal list
-                d_nodechild = self.Node_filterOnID(id = str_child)
-                Nodechild   = d_nodechild['Node']
-                childIndex  = d_nodechild['index']
+                if type(str_child) == str:
+                    # Find childNode in internal list
+                    d_nodechild = self.Node_filterOnID(id = str_child)
+                    Nodechild   = d_nodechild['Node']
+                    childIndex  = d_nodechild['index']
+                if type(str_child) == dict:
+                    Nodechild   = str_child
+                    d_nodechild = self.Node_filterOnID(id = Nodechild['id'])
+                    childIndex  = d_nodechild['index']
                 if Nodechild:
                     Nodeparent.connectTo(Node = Nodechild)
                     self.ld_links.append({

@@ -101,6 +101,13 @@ if __name__ == "__main__":
         default = '7',
         help    = 'Number of remote compute env chains.'
     )
+    parser.add_argument(
+        '--topology',
+        action  = 'store',
+        dest    = 'str_topology',
+        default = '1',
+        help    = 'Topology type.'
+    )
     
     args            = parser.parse_args()
 
@@ -123,32 +130,67 @@ if __name__ == "__main__":
             {"id": "hippocrates",       "score": 0.3,       "size": 200},
             {"id": "zeus",              "score": 0.3,       "size": 200},
             {"id": "athena",            "score": 0.3,       "size": 200},
-            {"id": "chris-tmp",         "score": 0.1,       "size": 20},    
-            {"id": "fnndsc-meg",        "score": 0.1,       "size": 20},    
-            {"id": "fnndsc-cbd",        "score": 0.1,       "size": 20},    
-            {"id": "fnndsc-cel",        "score": 0.1,       "size": 20}
+            {"id": "chris-tmp",         "score": 0.1,       "size": 20}   
         ]
     ) 
 
+    if args.str_topology == '2':
+        F.node_add(
+            # FNNDSC Nodes
+            nodeList = [
+            {"id": "tautona-users",     "score": 0.1,       "size": 500},    
+            {"id": "tautona-research",  "score": 0.1,       "size": 500},    
+            {"id": "fnndsc-mri",        "score": 0.1,       "size": 20},    
+            {"id": "fnndsc-nirs",       "score": 0.1,       "size": 20},    
+            {"id": "fnndsc-meg",        "score": 0.1,       "size": 20},    
+            {"id": "fnndsc-cbd",        "score": 0.1,       "size": 20},    
+            {"id": "fnndsc-cel",        "score": 0.1,       "size": 20}
+            ]
+        )
+
     # Client workstations
-    d_clientGroups  = {'CBD' : [], 'MEG' : [], 'MRI' : [], 'NIRS' : []}
+    d_clientGroups  = { 'fnndsc-cbd' :  [], 
+                        'fnndsc-meg' :  [], 
+                        'fnndsc-cel' :  [], 
+                        'fnndsc-mri' :  [], 
+                        'fnndsc-nirs' : []}
     for workstationGroup in d_clientGroups.keys():
         d_clientGroups[workstationGroup] = chain_create(
             prefix      = workstationGroup,
             links       = int(args.str_chainLength),
             nodeInfo    = {'score' : 0.5, 'size': 10, 'type': 'circle'}
         )
-        pudb.set_trace()
-        F.node_add(nodeList             = d_clientGroups[workstationGroup])
-        F.node_connectLinearChain(chain = d_clientGroups[workstationGroup])
-        # l_nodeNames = [n for n in enumerate(d_clientGroups[workstationGroup])
-        F.node_connect(fromNode = "fnndsc",     toNode = d_clientGroups[workstationGroup])
+        # pudb.set_trace()
+        F.node_add(     
+                        nodeList    = d_clientGroups[workstationGroup]
+                    )
+        F.node_connectLinearChain(
+                        chain       = d_clientGroups[workstationGroup]
+                        )
+        if args.str_topology == '1':
+            F.node_connect( 
+                            fromNode    = "fnndsc",     
+                            toNode      = d_clientGroups[workstationGroup]
+                        )
+        if args.str_topology == '2':
+            F.node_connect( 
+                            fromNode    = workstationGroup,     
+                            toNode      = d_clientGroups[workstationGroup]
+                        )
 
     # Connect main core nodes together
-    F.node_connect(fromNode = "tautona",        toNode = ["fnndsc", "pretoria", "capetown", "goldreef", "rc-fs-tautona"])
-    F.node_connect(fromNode = "santorini",      toNode = ["fnndsc", "seville"])
-    F.node_connect(fromNode = "hippocrates",    toNode = ["fnndsc", "hercules"])
-    F.node_connect(fromNode = "zeus",           toNode = ["fnndsc", "athena"])
+    F.node_connect(     fromNode = "chris-tmp",     toNode = ["fnndsc"])
+    if args.str_topology == '1':
+        F.node_connect( fromNode = "tautona",       toNode = ["fnndsc", "pretoria", "capetown", "goldreef", "rc-fs-tautona"])
+        F.node_connect( fromNode = "santorini",     toNode = ["fnndsc", "seville"])
+        F.node_connect( fromNode = "hippocrates",   toNode = ["fnndsc", "hercules"])
+        F.node_connect( fromNode = "zeus",          toNode = ["fnndsc", "athena"])
+    if args.str_topology == '2':
+        F.node_connect( fromNode = "fnndsc",        toNode = ["fnndsc-mri"])
+        F.node_connect( fromNode = "fnndsc",        toNode = ["fnndsc-nirs"])
+        F.node_connect( fromNode = "santorini",     toNode = ["fnndsc-cbd", "seville"])
+        F.node_connect( fromNode = "hippocrates",   toNode = ["fnndsc-cel", "hercules"])
+        F.node_connect( fromNode = "zeus",          toNode = ["fnndsc-meg", "athena"])
 
     F.FDG_build(saveFile = args.str_saveFile)
 
